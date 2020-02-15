@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <p>
+        {{message}}
+      </p>
+      <button v-on:click="reverseMessage">
+        메세지 뒤집기
+      </button>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#root",
+      data: { message: "안녕하세요?" },
+      methods: {
+        reverseMessage: function() {
+          this.message = this.message
+            .split("")
+            .reverse()
+            .join("");
+        }
+      }
+    });
+  </script>
+</html>
