@@ -14,12 +14,17 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: "vue-loader"
+      },
+      {
+        test: /\.css$/,
+        loader: ["vue-style-loader", "css-loader"]
       }
     ]
   },
   plugins: [new VueLoaderPlugin()],
   output: {
     filename: "app.js",
-    path: path.join(__dirname, "dist")
+    path: path.join(__dirname, "dist"),
+    publicPath: "/dist"
   }
 };
