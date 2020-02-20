@@ -53,7 +53,6 @@ export default {
       this.winBalls = [];
       this.bonus = null;
       this.redo = false;
-      this.showBalls();
     },
     showBalls() {
       for (let i = 0; i < this.winNumbers.length - 1; i++) {
@@ -76,7 +75,14 @@ export default {
       clearTimeout(t);
     });
   },
-  watch() {}
+  watch: {
+    winBalls(val, oldVal) {
+      console.log(oldVal);
+      if (val.length === 0) {
+        this.showBalls();
+      }
+    }
+  }
 };
 </script>
 
