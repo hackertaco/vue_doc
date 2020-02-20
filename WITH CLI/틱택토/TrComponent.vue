@@ -1,6 +1,12 @@
 <template>
   <tr>
-    <td-component></td-component>
+    <td-component
+      v-for="(cellData, index) in rowData"
+      :cell-data="cellData"
+      :cell-index="index"
+      :row-index="rowIndex"
+      :key="index"
+    ></td-component>
   </tr>
 </template>
 
@@ -9,6 +15,15 @@ import TdComponent from "./TdComponent";
 export default {
   components: {
     TdComponent
+  },
+  data() {
+    return {
+      parent: "내가 니 애비다"
+    };
+  },
+  props: {
+    rowData: Array,
+    rowIndex: Number
   }
 };
 </script>

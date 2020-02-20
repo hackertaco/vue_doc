@@ -4,7 +4,7 @@
       v-for="(rowData, index) in tableData"
       :row-data="rowData"
       :row-index="index"
-      :key="(rowData, index)"
+      :key="index"
     ></tr-component>
   </table>
 </template>
@@ -20,3 +20,4 @@ export default {
   }
 };
 </script>
+<style scoped></style>
