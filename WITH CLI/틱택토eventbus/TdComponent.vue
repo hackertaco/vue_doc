@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import EventBus from "./EventBus";
 export default {
   props: {
     cellData: String,
@@ -12,69 +13,7 @@ export default {
   methods: {
     onClickTd() {
       if (this.cellData) return;
-      let rootData = this.$root.$data;
-      this.$set(
-        rootData.tableData[this.rowIndex],
-        this.cellIndex,
-        rootData.turn
-      );
-      let win = false;
-      if (
-        rootData.tableData[this.rowIndex][0] === rootData.turn &&
-        rootData.tableData[this.rowIndex][1] === rootData.turn &&
-        rootData.tableData[this.rowIndex][2] === rootData.turn
-      ) {
-        win = true;
-      }
-      if (
-        rootData.tableData[0][this.cellIndex] === rootData.turn &&
-        rootData.tableData[1][this.cellIndex] === rootData.turn &&
-        rootData.tableData[2][this.cellIndex] === rootData.turn
-      ) {
-        win = true;
-      }
-      if (
-        rootData.tableData[0][0] === rootData.turn &&
-        rootData.tableData[1][1] === rootData.turn &&
-        rootData.tableData[2][2] === rootData.turn
-      ) {
-        win = true;
-      }
-      if (
-        rootData.tableData[2][0] === rootData.turn &&
-        rootData.tableData[1][1] === rootData.turn &&
-        rootData.tableData[0][2] === rootData.turn
-      ) {
-        win = true;
-      }
-      if (win) {
-        rootData.winner = rootData.turn;
-        rootData.turn = "O";
-        rootData.tableData = [
-          ["", "", ""],
-          ["", "", ""],
-          ["", "", ""]
-        ];
-      } else {
-        let all = true;
-        rootData.tableData.forEach(row => {
-          row.forEach(ceil => {
-            if (!ceil) {
-              all = false;
-            }
-          });
-        });
-        if (all) {
-          rootData.turn = "O";
-          rootData.winner = "";
-          rootData.tableData = [
-            ["", "", ""],
-            ["", "", ""],
-            ["", "", ""]
-          ];
-        }
-        rootData.turn = rootData.turn === "O" ? "X" : "O";
-      }
+      EventBus.$emit("clickTd", this.rowIndex, this.cellIndex);
     }
   }
 };
