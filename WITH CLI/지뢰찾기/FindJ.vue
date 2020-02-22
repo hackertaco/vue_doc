@@ -1,27 +1,41 @@
 <template>
   <div>
-    <div>{{ turn }}님의 턴입니다</div>
-    <table-component :table-data="tableData"></table-component>
-    <div v-if="winner">{{ winner }}님의 압도적 승리!</div>
+    <mine-form />
+    <div>{{ timer }}</div>
+    <table-component />
+    <div>{{ result }}</div>
   </div>
 </template>
 <script>
-import TableComponent from "./TableComponent";
 import Vue from "vue";
+import store, { INCREMENT_TIMER } from "./store";
+import { mapState } from "vuex";
+
+import MineForm from "./MineForm";
+import TableComponent from "./TableComponent";
+let interval;
 export default {
-  components: { TableComponent },
-  data() {
-    return {
-      tableData: [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""]
-      ],
-      turn: "O",
-      winner: ""
-    };
+  store,
+  components: { MineForm, TableComponent },
+  computed: {
+    ...mapState(["timer", "result", "halted"])
   },
-  methods: {}
+  data() {
+    return {};
+  },
+  methods: {},
+  watch: {
+    halted(value, oldValue) {
+      if (value === false) {
+        interval = setInterval(() => {
+          this.$store.commit(INCREMENT_TIMER);
+        }, 1000);
+      } else {
+        //게임중단
+        clearInterval(interval);
+      }
+    }
+  }
 };
 </script>
 <style>
